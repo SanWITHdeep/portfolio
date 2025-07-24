@@ -1,4 +1,3 @@
-<!-- SANDEEP's portfolio -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,12 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sandeep Chandra Sagar | Data Scientist & Photographer</title>
     
-    <!-- Google Fonts: Plus Jakarta Sans (body) & Antonio (headings) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Tailwind CSS for utility classes -->
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
@@ -184,7 +181,7 @@
         .parallax-bg {
             background-size: cover;
             background-position: center;
-            background-attachment: fixed; /* Fallback for no JS */
+            background-attachment: fixed; /* Creates the parallax effect */
             height: 100vh;
             width: 100%;
             position: relative;
@@ -193,6 +190,16 @@
             justify-content: center;
         }
         
+        /* On mobile devices, 'background-attachment: fixed' can cause performance and rendering issues. 
+           This media query switches to 'scroll' for a smoother experience on smaller screens
+           and adjusts height to prevent extreme cropping of landscape images on portrait screens. */
+        @media (max-width: 768px) {
+            .parallax-bg {
+                background-attachment: scroll;
+                height: 60vh;
+            }
+        }
+
         .glass-panel {
             background: rgba(10, 10, 10, 0.25);
             backdrop-filter: blur(12px);
@@ -241,17 +248,15 @@
     <div class="cursor-dot"></div>
     <div class="cursor-tail"></div>
 
-    <!-- Sticky Name Header (appears on scroll) -->
     <div id="sticky-name" class="fixed top-8 left-8 z-50 text-2xl font-bold opacity-0 pointer-events-none">
         SANDEEP CHANDRA SAGAR
     </div>
 
-    <!-- HERO SECTION -->
     <header class="h-screen w-full flex flex-col justify-center items-center text-center p-4 relative overflow-hidden">
         <div class="marquee-container">
             <h1 class="moving-text">
-                <span>SANDEEP </span><span class="outline">CHANDRA SAGAR</span>&nbsp;&nbsp;&nbsp;
-                <span>SANDEEP </span><span class="outline">CHANDRA SAGAR</span>&nbsp;&nbsp;&nbsp;
+                <span>SANDEEP </span><span class="outline">CHANDRA SAGAR</span>   
+                <span>SANDEEP </span><span class="outline">CHANDRA SAGAR</span>   
             </h1>
         </div>
         <img src="myimage.png" 
@@ -268,7 +273,6 @@
         </div>
     </header>
 
-    <!-- ABOUT ME SECTION -->
     <section id="about-section" class="relative py-20 md:py-40">
         <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 items-center">
             <div class="md:col-span-1">
@@ -282,13 +286,11 @@
         </div>
     </section>
 
-    <!-- IT WORK & PROJECTS (HORIZONTAL SCROLL) -->
     <section class="horizontal-scroll-section relative h-[100vh] w-full bg-[#0a0a0a]">
         <div class="sticky top-0 left-0 h-full w-full flex flex-col justify-center">
              <h2 class="section-title text-4xl md:text-5xl font-bold text-center mb-12 text-white">My Work & Projects</h2>
             <div class="horizontal-scroll-track-wrapper w-full">
                 <div class="horizontal-scroll-track">
-                    <!-- Project Cards -->
                     <a href="https://github.com/SanWITHdeep/fingerprintspoof" class="project-card-link" target="_blank" rel="noopener noreferrer">
                         <div class="project-card">
                             <div class="project-card-image">
@@ -364,7 +366,6 @@
         </div>
     </section>
 
-    <!-- PHOTOGRAPHY SECTION -->
     <section class="photography-section relative">
         <div class="parallax-bg" style="background-image: url('photography1.JPEG');">
             <div class="glass-panel p-8 text-center">
@@ -376,11 +377,9 @@
         <div class="parallax-bg" style="background-image: url('photography3.JPEG');"></div>
     </section>
 
-    <!-- SKILLS & RESUME SECTION -->
     <section class="container mx-auto py-20 md:py-32 px-6">
         <h2 class="section-title text-4xl md:text-5xl font-bold mb-16 text-center">Skills & Experience</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-            <!-- Skills -->
             <div class="skill-item">
                 <h3 class="text-2xl font-semibold mb-4 text-green-400">Languages</h3>
                 <ul class="text-gray-300 space-y-2"><li>Java</li><li>Python</li></ul>
@@ -397,8 +396,7 @@
                 <h3 class="text-2xl font-semibold mb-4 text-green-400">Tools</h3>
                 <ul class="text-gray-300 space-y-2"><li>Git & GitHub</li><li>Power BI</li><li>Tableau</li><li>Excel</li></ul>
             </div>
-             <!-- Experience -->
-            <div class="skill-item md:col-span-2 lg:col-span-2">
+             <div class="skill-item md:col-span-2 lg:col-span-2">
                  <h3 class="text-2xl font-semibold mb-4 text-green-400">Experience</h3>
                  <div class="space-y-4">
                     <div>
@@ -414,7 +412,6 @@
         </div>
     </section>
 
-    <!-- CONTACT SECTION -->
     <footer class="py-20 md:py-32 px-6 text-center bg-black bg-opacity-20">
         <div class="container mx-auto">
             <h2 id="connect-title" class="text-4xl md:text-6xl font-bold tracking-tighter" style="font-family: var(--heading-font);">
@@ -441,12 +438,11 @@
                 </a>
             </div>
              <div class="mt-16 text-gray-600">
-                <p>&copy; <span id="year"></span> Sandeep Chandra Sagar's portfolio.</p>
+                <p>© <span id="year"></span> Sandeep Chandra Sagar's portfolio.</p>
             </div>
         </div>
     </footer>
 
-    <!-- GSAP & ScrollTrigger -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
