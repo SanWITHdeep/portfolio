@@ -1,28 +1,66 @@
+<!-- SANDEEP's portfolio -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sandeep Chandra Sagara | Data Scientist & Photographer</title>
+    <title>Sandeep Chandra Sagar | Data Scientist & Photographer</title>
     
-    <!-- Google Fonts: Inter & Orbitron -->
+    <!-- Google Fonts: Plus Jakarta Sans (body) & Antonio (headings) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- Tailwind CSS for utility classes -->
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
+        /* Font Variables */
+        :root {
+            --heading-font: 'Antonio', sans-serif;
+            --body-font: 'Plus Jakarta Sans', sans-serif;
+        }
+
         /* Custom styles to complement Tailwind and for specific animations */
         body {
             background-color: #0a0a0a;
             color: #e0e0e0;
-            font-family: 'Inter', sans-serif;
+            font-family: var(--body-font);
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             overflow-x: hidden;
+            cursor: none; /* Hide default cursor */
         }
+
+        /* Custom Cursor Styles */
+        .cursor-dot, .cursor-tail {
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            border-radius: 50%;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.2s ease-out;
+        }
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #4ade80;
+        }
+        .cursor-tail {
+            width: 30px;
+            height: 30px;
+            background-color: rgba(74, 222, 128, 0.3);
+            box-shadow: 0 0 15px #4ade80, 0 0 25px #4ade80;
+        }
+        body:has(a:hover, button:hover, .project-card-link:hover) .cursor-tail {
+             transform: translate(-50%, -50%) scale(1.6);
+        }
+        body:has(a:hover, button:hover, .project-card-link:hover) .cursor-dot {
+             transform: translate(-50%, -50%) scale(0.5);
+        }
+
 
         /* Custom scrollbar for a sleek look */
         ::-webkit-scrollbar {
@@ -38,16 +76,18 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #5a5a5a;
         }
-
-        /* Base styles for animated elements */
-        .reveal-text {
-            clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
-        }
-        .section-title {
-            opacity: 0;
-            transform: translateY(30px);
-        }
         
+        /* Base styles for animated elements */
+        .reveal-text-wrapper {
+            display: inline-block;
+            overflow: hidden;
+        }
+        .reveal-text {
+            display: block;
+            transform: translateY(110%);
+            clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+        }
+
         /* Hero section styles for moving text and image */
         .marquee-container {
             position: absolute;
@@ -57,21 +97,37 @@
             transform: translateY(-50%);
             overflow: hidden;
             white-space: nowrap;
+            opacity: 0.8;
         }
         .moving-text {
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 900;
-            font-size: 12vw;
-            color: rgba(224, 224, 224, 0.08);
+            font-family: var(--heading-font);
+            font-size: 22vw; /* Increased size */
+            font-weight: 700;
+            color: #fff;
             will-change: transform;
             display: inline-block;
+        }
+        .moving-text .outline {
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.8);
+            text-stroke: 1px rgba(255, 255, 255, 0.8);
         }
         #hero-image {
             will-change: filter, opacity, transform;
         }
         #sticky-name {
-            font-family: 'Orbitron', sans-serif;
-            will-change: opacity;
+            font-family: var(--heading-font);
+            will-change: opacity, filter;
+        }
+
+        /* New About Section Styles */
+        #about-section {
+            background-color: #f0f0f0; /* Cream/greyish white */
+            color: #0a0a0a;
+            overflow: hidden; /* To contain the animated elements */
+        }
+        #about-heading, #about-details {
+            will-change: filter, opacity, transform;
         }
 
         /* Horizontal scrolling section styles */
@@ -81,26 +137,47 @@
         }
         .horizontal-scroll-track {
             display: flex;
-            will-change: transform;
+            padding: 0 5vw; /* Add padding to ensure last card is fully visible */
+        }
+        .project-card-link {
+            display: block;
+            text-decoration: none;
+            color: inherit;
         }
         .project-card {
             flex-shrink: 0;
             width: 60vw;
-            max-width: 600px;
-            height: 70vh;
+            max-width: 550px; /* Slightly smaller max-width */
+            height: 75vh;   /* Increased height for image */
             background-color: #141414;
             border-radius: 20px;
             border: 1px solid #2a2a2a;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            padding: 2.5rem;
+            padding: 1.5rem;
             margin-right: 2.5rem;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden; /* To contain image zoom */
         }
         .project-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        .project-card-image {
+            width: 100%;
+            height: 50%;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+        .project-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease-in-out;
+        }
+        .project-card:hover .project-card-image img {
+            transform: scale(1.05);
         }
 
         /* Photography section parallax styles */
@@ -116,7 +193,6 @@
             justify-content: center;
         }
         
-        /* Glassmorphism effect for text overlays */
         .glass-panel {
             background: rgba(10, 10, 10, 0.25);
             backdrop-filter: blur(12px);
@@ -129,7 +205,7 @@
         .custom-link {
             display: inline-block;
             position: relative;
-            color: #4ade80; /* Accent color */
+            color: #4ade80;
             text-decoration: none;
             transition: color 0.3s;
         }
@@ -152,89 +228,137 @@
             transform: scaleX(1);
             transform-origin: bottom left;
         }
+
+        /* Let's Connect Hover Style */
+        .stretch-letter {
+            display: inline-block;
+        }
+
     </style>
 </head>
 <body class="w-full">
 
+    <div class="cursor-dot"></div>
+    <div class="cursor-tail"></div>
+
     <!-- Sticky Name Header (appears on scroll) -->
     <div id="sticky-name" class="fixed top-8 left-8 z-50 text-2xl font-bold opacity-0 pointer-events-none">
-        Sandeep Chandra Sagar
+        SANDEEP CHANDRA SAGAR
     </div>
 
     <!-- HERO SECTION -->
     <header class="h-screen w-full flex flex-col justify-center items-center text-center p-4 relative overflow-hidden">
-        <!-- Moving background text -->
         <div class="marquee-container">
-            <h1 class="moving-text">SANDEEP CHANDRA SAGAR &nbsp;&nbsp;&nbsp; SANDEEP CHANDRA SAGAR &nbsp;&nbsp;&nbsp;</h1>
+            <h1 class="moving-text">
+                <span>SANDEEP </span><span class="outline">CHANDRA SAGAR</span>&nbsp;&nbsp;&nbsp;
+                <span>SANDEEP </span><span class="outline">CHANDRA SAGAR</span>&nbsp;&nbsp;&nbsp;
+            </h1>
         </div>
-
-        <!-- Your Image -->
         <img src="myimage.png" 
              alt="A photo of Sandeep Chandra Sagar" 
              id="hero-image" 
              class="absolute z-10 w-auto h-3/4 max-h-[75vh] object-contain pointer-events-none">
-
         <div class="z-20 relative mt-[60vh]">
              <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto" id="hero-subtitle">
                 An aspiring Data Scientist with a passion for photography, turning data into insights and moments into memories.
             </p>
         </div>
-
         <div class="absolute bottom-10 text-gray-500 text-sm animate-bounce z-20">
             Scroll to explore
         </div>
     </header>
 
     <!-- ABOUT ME SECTION -->
-    <section class="container mx-auto py-20 md:py-32 px-6">
-        <h2 class="section-title text-4xl md:text-5xl font-bold mb-12 text-center">About Me</h2>
-        <p class="about-text text-lg md:text-xl leading-relaxed text-gray-300 max-w-3xl mx-auto text-center">
-            I'm an aspiring Data Scientist with strong skills in Python, SQL, Power BI, and Machine Learning. Having worked as an Associate at IBM, I've honed my problem-solving and analytical skills. I am now actively seeking opportunities to apply my data science knowledge to solve real-world problems and drive meaningful insights.
-        </p>
+    <section id="about-section" class="relative py-20 md:py-40">
+        <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 items-center">
+            <div class="md:col-span-1">
+                <h2 id="about-heading" class="text-7xl lg:text-9xl font-bold tracking-tighter" style="font-family: var(--heading-font);">ABOUT</h2>
+            </div>
+            <div class="md:col-span-2">
+                <p id="about-details" class="text-lg md:text-xl leading-relaxed">
+                    I'm an aspiring <strong class="font-bold italic text-green-800">Data Scientist</strong> with strong skills in Python, SQL, Power BI, and Machine Learning. Having worked as an Associate at IBM, I've honed my problem-solving and analytical skills. I am now actively seeking opportunities to apply my data science knowledge to solve real-world problems and drive meaningful insights.
+                </p>
+            </div>
+        </div>
     </section>
 
     <!-- IT WORK & PROJECTS (HORIZONTAL SCROLL) -->
-    <section class="horizontal-scroll-section relative h-screen w-full">
+    <section class="horizontal-scroll-section relative h-[100vh] w-full bg-[#0a0a0a]">
         <div class="sticky top-0 left-0 h-full w-full flex flex-col justify-center">
-             <h2 class="section-title text-4xl md:text-5xl font-bold text-center mb-12">My Work & Projects</h2>
-            <div class="horizontal-scroll-track-wrapper w-full pl-[20vw]">
+             <h2 class="section-title text-4xl md:text-5xl font-bold text-center mb-12 text-white">My Work & Projects</h2>
+            <div class="horizontal-scroll-track-wrapper w-full">
                 <div class="horizontal-scroll-track">
                     <!-- Project Cards -->
-                    <div class="project-card">
-                        <div>
-                            <span class="text-sm font-semibold text-green-400">Machine Learning / Security</span>
-                            <h3 class="text-2xl md:text-3xl font-bold mt-2">Fingerprint Spoof Detector</h3>
+                    <a href="https://github.com/SanWITHdeep/fingerprintspoof" class="project-card-link" target="_blank" rel="noopener noreferrer">
+                        <div class="project-card">
+                            <div class="project-card-image">
+                                <img src="https://placehold.co/600x400/2c3e50/ecf0f1?text=Biometric+Security" alt="Fingerprint Spoof Detector Project Image">
+                            </div>
+                            <div class="flex flex-col flex-grow justify-between">
+                                <div>
+                                    <span class="text-sm font-semibold text-green-400">Machine Learning / Security</span>
+                                    <h3 class="text-2xl md:text-3xl font-bold mt-2">Fingerprint Spoof Detector</h3>
+                                </div>
+                                <p class="text-gray-400 mt-4">Utilized a CNN model to detect fake fingerprints with 70-96% accuracy. Built with Flask, TensorFlow, and OpenCV.</p>
+                            </div>
                         </div>
-                        <p class="text-gray-400">Utilized a CNN model to detect fake fingerprints with 70-96% accuracy. Built with Flask, TensorFlow, and OpenCV.</p>
-                    </div>
-                    <div class="project-card">
-                        <div>
-                            <span class="text-sm font-semibold text-green-400">Client Project / ML</span>
-                            <h3 class="text-2xl md:text-3xl font-bold mt-2">ITSM Incident Management</h3>
+                    </a>
+                    <a href="https://drive.google.com/file/d/1JpQhDHH7t9VOYnS0kl4qVDPOLNHmnzfh/view" class="project-card-link" target="_blank" rel="noopener noreferrer">
+                        <div class="project-card">
+                            <div class="project-card-image">
+                                <img src="https://placehold.co/600x400/3498db/ecf0f1?text=IT+Automation" alt="ITSM Incident Management Project Image">
+                            </div>
+                             <div class="flex flex-col flex-grow justify-between">
+                                <div>
+                                    <span class="text-sm font-semibold text-green-400">Client Project / ML</span>
+                                    <h3 class="text-2xl md:text-3xl font-bold mt-2">ITSM Incident Management</h3>
+                                </div>
+                                <p class="text-gray-400 mt-4">A client project at Rubixe to predict high-priority IT support tickets, enhancing incident response times.</p>
+                            </div>
                         </div>
-                        <p class="text-gray-400">A client project at Rubixe to predict high-priority IT support tickets, enhancing incident response times using various Python libraries.</p>
-                    </div>
-                    <div class="project-card">
-                        <div>
-                            <span class="text-sm font-semibold text-green-400">Web Development</span>
-                            <h3 class="text-2xl md:text-3xl font-bold mt-2">Student Information System</h3>
+                    </a>
+                    <a href="https://github.com/SanWITHdeep/sis" class="project-card-link" target="_blank" rel="noopener noreferrer">
+                        <div class="project-card">
+                            <div class="project-card-image">
+                                <img src="https://placehold.co/600x400/27ae60/ecf0f1?text=Web+Platform" alt="Student Information System Project Image">
+                            </div>
+                             <div class="flex flex-col flex-grow justify-between">
+                                <div>
+                                    <span class="text-sm font-semibold text-green-400">Web Development</span>
+                                    <h3 class="text-2xl md:text-3xl font-bold mt-2">Student Information System</h3>
+                                </div>
+                                <p class="text-gray-400 mt-4">A web application for managing student data, from basic details to academic scores. Built with HTML, CSS, PHP, and MySQL.</p>
+                            </div>
                         </div>
-                        <p class="text-gray-400">A web application for managing student data, from basic details to academic scores. Built with HTML, CSS, PHP, and MySQL.</p>
-                    </div>
-                     <div class="project-card">
-                        <div>
-                            <span class="text-sm font-semibold text-green-400">Data Analysis</span>
-                            <h3 class="text-2xl md:text-3xl font-bold mt-2">Bank Marketing Predictor</h3>
+                    </a>
+                     <a href="https://drive.google.com/file/d/1Nif_q8L9tHXhCKJOdL2Ftse25T3Mv6qg/view?usp=sharing" class="project-card-link" target="_blank" rel="noopener noreferrer">
+                        <div class="project-card">
+                            <div class="project-card-image">
+                                <img src="https://placehold.co/600x400/f1c40f/2c3e50?text=Financial+Data" alt="Bank Marketing Predictor Project Image">
+                            </div>
+                             <div class="flex flex-col flex-grow justify-between">
+                                <div>
+                                    <span class="text-sm font-semibold text-green-400">Data Analysis</span>
+                                    <h3 class="text-2xl md:text-3xl font-bold mt-2">Bank Marketing Predictor</h3>
+                                </div>
+                                <p class="text-gray-400 mt-4">Developed a model to provide suggestions to a bank's marketing team, improving campaign targeting.</p>
+                            </div>
                         </div>
-                        <p class="text-gray-400">Developed a model to provide suggestions to a bank's marketing team, improving campaign targeting and product adoption.</p>
-                    </div>
-                    <div class="project-card">
-                        <div>
-                            <span class="text-sm font-semibold text-green-400">Data Science</span>
-                            <h3 class="text-2xl md:text-3xl font-bold mt-2">PUBG Winner Predictor</h3>
+                    </a>
+                    <a href="https://colab.research.google.com/drive/1d2YfSKws8z-BZS7mRRY9W_aTKECXLnqs?usp=sharing" class="project-card-link" target="_blank" rel="noopener noreferrer">
+                        <div class="project-card">
+                            <div class="project-card-image">
+                                <img src="https://placehold.co/600x400/e74c3c/ecf0f1?text=Game+Analytics" alt="PUBG Winner Predictor Project Image">
+                            </div>
+                             <div class="flex flex-col flex-grow justify-between">
+                                <div>
+                                    <span class="text-sm font-semibold text-green-400">Data Science</span>
+                                    <h3 class="text-2xl md:text-3xl font-bold mt-2">PUBG Winner Predictor</h3>
+                                </div>
+                                <p class="text-gray-400 mt-4">Predicted game winners based on player statistics, demonstrating skills in feature engineering and predictive modeling.</p>
+                            </div>
                         </div>
-                        <p class="text-gray-400">Predicted game winners based on player statistics, demonstrating skills in feature engineering and predictive modeling.</p>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -242,14 +366,14 @@
 
     <!-- PHOTOGRAPHY SECTION -->
     <section class="photography-section relative">
-        <div class="parallax-bg" style="background-image: url('https://placehold.co/1920x1080/0a0a0a/e0e0e0?text=Nature+Shot');">
+        <div class="parallax-bg" style="background-image: url('photography1.jpeg');">
             <div class="glass-panel p-8 text-center">
                 <h2 class="section-title text-4xl md:text-5xl font-bold">My Passion for Photography</h2>
                 <p class="mt-4 text-lg text-gray-200">Capturing the world through a different lens.</p>
             </div>
         </div>
-        <div class="parallax-bg" style="background-image: url('https://placehold.co/1920x1080/1a1a1a/cccccc?text=Urban+Capture');"></div>
-        <div class="parallax-bg" style="background-image: url('https://placehold.co/1920x1080/000000/ffffff?text=Portrait');"></div>
+        <div class="parallax-bg" style="background-image: url('photography2.jpeg');"></div>
+        <div class="parallax-bg" style="background-image: url('photography3.jpeg');"></div>
     </section>
 
     <!-- SKILLS & RESUME SECTION -->
@@ -293,17 +417,31 @@
     <!-- CONTACT SECTION -->
     <footer class="py-20 md:py-32 px-6 text-center bg-black bg-opacity-20">
         <div class="container mx-auto">
-            <h2 class="text-4xl md:text-6xl font-bold tracking-tighter">
-                <span class="reveal-text-wrapper"><span class="reveal-text">Let's Connect</span></span>
+            <h2 id="connect-title" class="text-4xl md:text-6xl font-bold tracking-tighter" style="font-family: var(--heading-font);">
+                Let's Connect
             </h2>
             <p class="mt-6 text-lg text-gray-400">Ready to build something amazing? Reach out.</p>
             <div class="mt-12 space-y-4 md:space-y-0 md:space-x-8">
                 <a href="mailto:sandeep.chandrasagar.r@gmail.com" class="custom-link text-xl">sandeep.chandrasagar.r@gmail.com</a>
                 <span class="hidden md:inline text-gray-600">|</span>
-                <a href="tel:+919036736316" class="custom-link text-xl">+91 9036736316</a>
+                <a href="tel:+919000000000" class="custom-link text-xl">+91 90X6X36XXX</a>
+            </div>
+            <div class="mt-8 flex justify-center space-x-6">
+                <a href="https://www.instagram.com/__sandy.xo/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors duration-300" aria-label="Instagram">
+                    <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.584-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.069-4.85.069s-3.584-.011-4.85-.069c-3.25-.149-4.771-1.664-4.919-4.919-.058-1.265-.069-1.644-.069-4.85s.011-3.584.069-4.85c.148-3.225 1.664-4.771 4.919-4.919C8.416 2.175 8.796 2.163 12 2.163m0-2.163C8.74 0 8.333.012 7.053.072 2.695.272.273 2.69.073 7.052.012 8.333 0 8.74 0 12s.012 3.667.072 4.947c.2 4.358 2.618 6.78 6.98 6.98C8.333 23.988 8.74 24 12 24s3.667-.012 4.947-.072c4.354-.2 6.782-2.618 6.979-6.98.06-1.28.072-1.687.072-4.947s-.012-3.667-.072-4.947c-.197-4.354-2.624-6.78-6.979-6.98C15.667.012 15.26 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.88 1.44 1.44 0 000-2.88z"/></svg>
+                </a>
+                <a href="https://www.linkedin.com/in/sandeep-chandra-sagar-45453628a" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors duration-300" aria-label="LinkedIn">
+                    <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                </a>
+                <a href="https://youtube.com/@sandyyy1" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors duration-300" aria-label="YouTube">
+                    <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
+                </a>
+                <a href="https://github.com/SanWITHdeep" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors duration-300" aria-label="GitHub">
+                    <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.91 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                </a>
             </div>
              <div class="mt-16 text-gray-600">
-                <p>&copy; <span id="year"></span> Sandeep Chandra Sagar. Designed with inspiration, coded with passion.</p>
+                <p>&copy; <span id="year"></span> Sandeep Chandra Sagar's portfolio.</p>
             </div>
         </div>
     </footer>
@@ -317,161 +455,129 @@
             
             gsap.registerPlugin(ScrollTrigger);
             
+            // --- CUSTOM CURSOR ANIMATION ---
+            const cursorDot = document.querySelector('.cursor-dot');
+            const cursorTail = document.querySelector('.cursor-tail');
+
+            window.addEventListener('mousemove', e => {
+                gsap.to(cursorDot, {
+                    duration: 0.15,
+                    x: e.clientX,
+                    y: e.clientY
+                });
+                gsap.to(cursorTail, {
+                    duration: 0.6,
+                    x: e.clientX,
+                    y: e.clientY,
+                    ease: 'power2.out'
+                });
+            });
+
             // --- HERO ANIMATIONS ---
-
-            // 1. Marquee text animation (infinite loop)
             const marquee = document.querySelector('.moving-text');
-            // Calculate width of one instance of the text for a seamless loop
             const marqueeWidth = marquee.scrollWidth / 2; 
-            gsap.to(marquee, {
-                x: -marqueeWidth,
-                duration: 25, // Adjust for speed
-                repeat: -1,
-                ease: 'none'
-            });
+            gsap.to(marquee, { x: -marqueeWidth, duration: 25, repeat: -1, ease: 'none' });
 
-            // 2. Animate subtitle into view
-            gsap.from('#hero-subtitle', { 
-                opacity: 0, 
-                y: 20, 
-                duration: 1, 
-                ease: 'power3.out',
-                delay: 0.5
-            });
+            gsap.from('#hero-subtitle', { opacity: 0, y: 20, duration: 1, ease: 'power3.out', delay: 0.5 });
 
-            // 3. Scroll-based animations for image and sticky name
+            gsap.timeline({
+                scrollTrigger: { trigger: 'header', start: 'top top', end: 'bottom center', scrub: true }
+            })
+            .to('#hero-image', { filter: 'blur(20px)', opacity: 0, scale: 0.9, ease: 'power1.in' }, 0)
+            .fromTo('#sticky-name', { opacity: 0, filter: 'blur(10px)' }, { opacity: 1, filter: 'blur(0px)', ease: 'power1.out' }, 0);
+
+            // --- ABOUT SECTION ANIMATION ---
             gsap.timeline({
                 scrollTrigger: {
-                    trigger: 'header',
-                    start: 'top top',
-                    end: 'bottom center',
-                    scrub: true, // Smoothly animates with scroll
+                    trigger: '#about-section',
+                    start: 'top 60%',
+                    toggleActions: 'play none none reverse'
                 }
             })
-            .to('#hero-image', { 
-                filter: 'blur(20px)', 
-                opacity: 0, 
-                scale: 0.9,
-                ease: 'power1.in'
-            }, 0)
-            .to('#sticky-name', { 
-                opacity: 1,
-                ease: 'power1.out'
-            }, 0);
-
-
-            // --- GENERAL SECTION ANIMATIONS ---
-            gsap.utils.toArray('.section-title').forEach(title => {
-                gsap.fromTo(title, 
-                    { opacity: 0, y: 50 },
-                    {
-                        opacity: 1,
-                        y: 0,
-                        duration: 1,
-                        ease: 'power3.out',
-                        scrollTrigger: {
-                            trigger: title,
-                            start: 'top 85%',
-                            toggleActions: 'play none none none'
-                        }
-                    }
-                );
-            });
-            
-            gsap.from('.about-text', {
-                opacity: 0,
-                y: 40,
-                duration: 1,
-                ease: 'power3.out',
-                scrollTrigger: {
-                    trigger: '.about-text',
-                    start: 'top 85%',
-                    toggleActions: 'play none none none'
-                }
-            });
+            .fromTo('#about-heading', 
+                { y: 60, opacity: 0, filter: 'blur(15px)' },
+                { y: 0, opacity: 1, filter: 'blur(0px)', duration: 1.5, ease: 'power3.out' } // Slower duration
+            )
+            .fromTo('#about-details', 
+                { y: 60, opacity: 0, filter: 'blur(15px)' },
+                { y: 0, opacity: 1, filter: 'blur(0px)', duration: 1.5, ease: 'power3.out' }, // Slower duration
+                '-=1.2' // Overlap animations
+            );
 
             // --- HORIZONTAL SCROLLING PROJECTS ---
             const horizontalSection = document.querySelector('.horizontal-scroll-section');
             const track = document.querySelector('.horizontal-scroll-track');
             
-            const scrollWidth = track.scrollWidth - window.innerWidth + (window.innerWidth * 0.4);
-
             gsap.to(track, {
-                x: -scrollWidth,
+                x: () => -(track.scrollWidth - horizontalSection.offsetWidth),
                 ease: 'none',
                 scrollTrigger: {
                     trigger: horizontalSection,
                     start: 'top top',
-                    end: () => `+=${scrollWidth}`,
+                    end: () => `+=${track.scrollWidth - horizontalSection.offsetWidth}`,
                     scrub: 1,
                     pin: true,
                     invalidateOnRefresh: true,
-                    anticipatePin: 1
                 }
             });
-            
-            gsap.utils.toArray('.project-card').forEach(card => {
-                gsap.from(card, {
-                    opacity: 0.5,
-                    scale: 0.9,
-                    y: 30,
-                    ease: 'power2.out',
-                    scrollTrigger: {
-                        trigger: card,
-                        containerAnimation: gsap.to(track, {x: -scrollWidth, ease: 'none'}),
-                        start: 'left 90%',
-                        toggleActions: 'play none none reverse',
-                    }
-                });
-            });
 
+            // --- GENERAL SECTION TITLE ANIMATIONS ---
+            gsap.utils.toArray('.section-title').forEach(title => {
+                gsap.fromTo(title, 
+                    { opacity: 0, y: 50 },
+                    {
+                        opacity: 1, y: 0, duration: 1, ease: 'power3.out',
+                        scrollTrigger: { trigger: title, start: 'top 85%', toggleActions: 'play none none none' }
+                    }
+                );
+            });
 
             // --- PHOTOGRAPHY PARALLAX ---
             gsap.utils.toArray('.parallax-bg').forEach(section => {
                 gsap.to(section, {
                     backgroundPosition: `50% ${-window.innerHeight / 4}px`,
                     ease: "none",
-                    scrollTrigger: {
-                        trigger: section,
-                        start: "top bottom",
-                        end: "bottom top",
-                        scrub: true
-                    }
+                    scrollTrigger: { trigger: section, start: "top bottom", end: "bottom top", scrub: true }
                 });
             });
-
 
             // --- SKILLS & RESUME FADE-IN ---
             gsap.utils.toArray('.skill-item').forEach((item, index) => {
                 gsap.from(item, {
-                    opacity: 0,
-                    y: 50,
-                    duration: 0.8,
-                    ease: 'power3.out',
-                    scrollTrigger: {
-                        trigger: item,
-                        start: 'top 90%',
-                        toggleActions: 'play none none none'
-                    },
+                    opacity: 0, y: 50, duration: 0.8, ease: 'power3.out',
+                    scrollTrigger: { trigger: item, start: 'top 90%', toggleActions: 'play none none none' },
                     delay: (index % 3) * 0.1
                 });
             });
             
-            // --- FOOTER REVEAL ANIMATION ---
-            gsap.timeline({
-                scrollTrigger: {
-                    trigger: 'footer',
-                    start: 'top 95%',
-                    toggleActions: 'play none none none'
-                }
-            }).to('footer .reveal-text', {
-                clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)', 
-                y: 0, 
-                duration: 1.2, 
-                ease: 'power4.out'
+            // --- FOOTER STRETCH ANIMATION ---
+            const connectTitle = document.getElementById('connect-title');
+            const letters = connectTitle.innerText.split('');
+            connectTitle.innerHTML = '';
+            letters.forEach(letter => {
+                let span = document.createElement('span');
+                span.innerText = letter === ' ' ? '\u00A0' : letter;
+                span.className = 'stretch-letter';
+                connectTitle.appendChild(span);
             });
 
-            // Set current year in footer
+            gsap.utils.toArray('.stretch-letter').forEach(letter => {
+                letter.addEventListener('mouseenter', () => {
+                    gsap.to(letter, {
+                        scaleY: 1.4,
+                        duration: 0.3,
+                        ease: 'power3.out'
+                    });
+                });
+                letter.addEventListener('mouseleave', () => {
+                    gsap.to(letter, {
+                        scaleY: 1,
+                        duration: 0.6,
+                        ease: 'elastic.out(1, 0.5)'
+                    });
+                });
+            });
+
             document.getElementById('year').textContent = new Date().getFullYear();
         });
     </script>
